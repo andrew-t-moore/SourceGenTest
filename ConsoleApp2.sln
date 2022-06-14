@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{F460F21B-01D4-48FE-B0EF-480D55898B61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeEnumsGreatAgain", "MakeEnumsGreatAgain\MakeEnumsGreatAgain.csproj", "{308388A8-BDCE-43DE-9CCB-72D675827E20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeEnumsGreatAgain.Generators", "MakeEnumsGreatAgain.Generators\MakeEnumsGreatAgain.Generators.csproj", "{C5C25A87-56FB-4C28-A7FF-7DD32B2BEE05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F460F21B-01D4-48FE-B0EF-480D55898B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F460F21B-01D4-48FE-B0EF-480D55898B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F460F21B-01D4-48FE-B0EF-480D55898B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F460F21B-01D4-48FE-B0EF-480D55898B61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308388A8-BDCE-43DE-9CCB-72D675827E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{308388A8-BDCE-43DE-9CCB-72D675827E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{308388A8-BDCE-43DE-9CCB-72D675827E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{308388A8-BDCE-43DE-9CCB-72D675827E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5C25A87-56FB-4C28-A7FF-7DD32B2BEE05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5C25A87-56FB-4C28-A7FF-7DD32B2BEE05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5C25A87-56FB-4C28-A7FF-7DD32B2BEE05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C25A87-56FB-4C28-A7FF-7DD32B2BEE05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
