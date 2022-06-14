@@ -56,12 +56,15 @@ public abstract record Result
 You can then write code like this:
 
 ```csharp
-Console.WriteLine(
-    new Result.OkResult("everything is ok").Switch(
-        notFoundResult: nfr => "not found",
-        okResult: okr => okr.Message
+public static void WriteResult(Result result)
+{
+  Console.WriteLine(
+    result.Switch(
+      notFoundResult: nfr => "not found",
+      okResult: okr => okr.Message
     )
-);
+  );
+}
 ```
 
 The advantage is the same as for enums: as soon as you add a new sub-type the compiler will force you to handle the new case everywhere you have used `Switch`.
