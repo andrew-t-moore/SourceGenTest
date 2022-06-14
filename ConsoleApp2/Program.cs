@@ -1,5 +1,6 @@
 ﻿using ConsoleApp2;
 using EnumsAreNowGreat;
+using RecordsAreNowGreat;
 
 Console.WriteLine(
     States.Off.Switch(
@@ -13,5 +14,12 @@ Console.WriteLine(
         html: () => "aytch-tee-em-ell",
         javaScript: () => "js",
         csharp: () => "c-trash-tag"
+    )
+);
+
+Console.WriteLine(
+    new Result.OkResult("everything is ok").Switch(
+        notFoundResult: nfr => "not found",
+        okResult: okr => okr.Message
     )
 );

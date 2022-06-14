@@ -1,21 +1,20 @@
-﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MakeEnumsGreatAgain.Generators;
 
 [Generator]
-public class SwitchableGenerator : ISourceGenerator
+public class SwitchableEnumGenerator : ISourceGenerator
 {
     public void Initialize(GeneratorInitializationContext context)
     {
-        Console.WriteLine("Initialising");
     }
 
     public void Execute(GeneratorExecutionContext context)
     {
         var enums = GetEnums(context);
 
-        var methods = string.Join("", enums.Select(e => GenerateEnumSwitch(
+        var methods = string.Join("", enums.Select(e => GenerateSwitchMethod(
             context,
             e
         )));
@@ -26,14 +25,32 @@ namespace EnumsAreNowGreat {{
         {methods}
     }}
 }}";
-        
         // Only for debugging purposes.
-        File.WriteAllText("C:/Output/generated.cs", source);
+        File.WriteAllText("C:/Output/SwitchableEnumGenerator.output.cs", source);
         
-        context.AddSource("SwitchableGenerator", source);
+        context.AddSource("SwitchableEnumGenerator", source);
     }
     
-    private string GenerateEnumSwitch(
+    private static IEnumerable<EnumDeclarationSyntax> GetEnums(GeneratorExecutionContext context)
+    {
+        foreach (var tree in context.Compilation.SyntaxTrees)
+        {
+            var semantic = context.Compilation.GetSemanticModel(tree);
+    
+            foreach (var foundEnum in tree.GetRoot().DescendantNodesAndSelf().OfType<EnumDeclarationSyntax>())
+            {
+                var enumSymbol = semantic.GetDeclaredSymbol(foundEnum);
+    
+                if (enumSymbol != null && enumSymbol.GetAttributes()
+                        .Any(attribute => attribute.AttributeClass?.Name == "SwitchableAttribute"))
+                {
+                    yield return foundEnum;
+                }
+            }
+        }
+    }
+
+    private static string GenerateSwitchMethod(
         GeneratorExecutionContext context,
         EnumDeclarationSyntax @enum
     )
@@ -54,7 +71,7 @@ namespace EnumsAreNowGreat {{
             .Select(member => member.Identifier.Text)
             .Select(valueName => (
                 valueName,
-                argName: ToCamelCase(valueName)
+                argName: CamelCase.ToCamelCase(valueName)
             ))
             .ToArray();
         
@@ -75,39 +92,5 @@ namespace EnumsAreNowGreat {{
             }};
         }}
 ";
-    }
-
-    private static string ToCamelCase(string input)
-    {
-        // This is not a great camel case algorithm,
-        // but it's just for demonstration purposes.
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            throw new Exception("Input string was null or whitespace");
-        }
-
-        var prefix = new string(input
-            .TakeWhile(char.IsUpper)
-            .ToArray())
-            .ToLowerInvariant();
-
-        return prefix.Length == input.Length
-            ? prefix
-            : prefix + input.Substring(prefix.Length);
-    }
-    
-    private static IEnumerable<EnumDeclarationSyntax> GetEnums(GeneratorExecutionContext context) {
-        foreach (var tree in context.Compilation.SyntaxTrees) {
-            var semantic = context.Compilation.GetSemanticModel(tree);
-    
-            foreach (var foundEnum in tree.GetRoot().DescendantNodesAndSelf().OfType<EnumDeclarationSyntax>()) {
-                var enumSymbol = semantic.GetDeclaredSymbol(foundEnum);
-    
-                if (enumSymbol != null && enumSymbol.GetAttributes()
-                        .Any(attribute => attribute.AttributeClass?.Name == "SwitchableAttribute")) {
-                    yield return foundEnum;
-                }
-            }
-        }
     }
 }
